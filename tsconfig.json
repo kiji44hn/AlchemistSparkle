@@ -8,12 +8,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
+    "types": ["vite/client", "vue", "vue-router"],
+    "baseUrl": ".", // プロジェクトルートを基準
     "paths": {
       "@/*": ["src/*"]
-    },
-    "types": ["vite/client", "vue"],
-    "lib": ["ESNext", "DOM", "WebWorker"]
+    }
   },
   "include": ["src/**/*", "src/**/*.vue"],
   "exclude": ["node_modules"]

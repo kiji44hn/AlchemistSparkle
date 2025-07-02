@@ -14,21 +14,14 @@
     <footer>
       <p>© 2025 KA's Atelier</p>
     </footer>
-    <div class="audio">
-      <AudioPlayer />
-    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import AudioPlayer from './components/AudioPlayer.vue';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    AudioPlayer: AudioPlayer
-  }
 });
 </script>
 

@@ -3,45 +3,68 @@
     <h2>ようこそ、KAの錬金工房へ！</h2>
     <p>アトリエの魔法と情熱で創られたプロジェクトをご覧あれ</p>
     <img src="/images/kettle.png" alt="錬金釜" class="kettle" />
-    <div class="sparkle"></div>
+    <div id="three-canvas" ref="canvasRef"></div>
+    <AudioPlayer />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { gsap } from 'gsap';
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
+import AudioPlayer from '@/components/AudioPlayer.vue';
 
 export default defineComponent({
-  name: 'Home',
-  mounted() {
-    gsap.to('.sparkle', {
-      x: 'random(-100, 100)',
-      y: 'random(-100, 100)',
-      scale: 1.5,
-      opacity: 0,
-      repeat: -1,
-      duration: 2,
-      ease: 'sine.inOut',
-      stagger: 0.5,
-    });
+  components: { AudioPlayer },
+  setup() {
+    const canvasRef = ref<HTMLDivElement | null>(null);
+
+    const initThree = async () => {
+      const THREE = await import('three');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth * 0.5, window.innerHeight * 0.5);
+      if (canvasRef.value) canvasRef.value.appendChild(renderer.domElement);
+      camera.position.z = 5;
+
+      // パーティクル設定
+      const particlesGeometry = new THREE.BufferGeometry();
+      const particlesCount = 100;
+      const positions = new Float32Array(particlesCount * 3);
+      const sizes = new Float32Array(particlesCount);
+
+      for (let i = 0; i < particlesCount * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 10;
+        positions[i + 1] = (Math.random() - 0.5) * 10;
+        positions[i + 2] = (Math.random() - 0.5) * 10;
+        sizes[i / 3] = Math.random() * 0.5 + 0.1;
+      }
+
+      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+      const textureLoader = new THREE.TextureLoader();
+      const sparkleTexture = textureLoader.load('/sparkle.png');
+      const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.5,
+        map: sparkleTexture,
+        transparent: true,
+        alphaTest: 0.1,
+      });
+
+      const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+      scene.add(particles);
+
+      const animate = () => {
+        requestAnimationFrame(animate);
+        particles.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      };
+      animate();
+    };
+
+    initThree();
+
+    return { canvasRef };
   },
 });
 </script>
-
-<style scoped>
-.home {
-  @apply p-16 md:p-5 font-playfair text-center;
-}
-.home h2 {
-  @apply text-[#4a90e2] text-4xl;
-}
-.home p {
-  @apply text-[#6b4e71] text-xl mb-5;
-}
-.kettle {
-  @apply w-[17rem] h-[17rem] mx-auto my-5; /* w-24 h-24をw-[17rem] h-[17rem]に変更 */
-}
-.sparkle {
-  @apply w-12 h-12 bg-[url('/images/sparkle.png')] bg-center bg-no-repeat bg-contain absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
-}
-</style>
