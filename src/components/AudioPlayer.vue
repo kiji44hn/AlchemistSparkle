@@ -14,7 +14,7 @@ import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 
 export default defineComponent({
   setup() {
-    const audioSrc = '/emerald.mp3';
+    const audioSrc = '/harunoyokan.mp3';
     const canvasWidth = 600;
     const canvasHeight = 200;
     const barColor = (hue: number) => `hsl(${hue}, 100%, 50%)`;
