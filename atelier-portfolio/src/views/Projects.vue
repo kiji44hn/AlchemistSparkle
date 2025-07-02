@@ -1,4 +1,3 @@
-<!-- src/views/Projects.vue -->
 <template>
   <div class="projects">
     <h2>錬金プロジェクト一覧</h2>
@@ -13,8 +12,18 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  github: string;
+}
+
+export default defineComponent({
   data() {
     return {
       projects: [
@@ -39,46 +48,32 @@ export default {
           image: '/images/creativeeffectslab.png',
           github: 'https://github.com/kiji44hn/CreativeEffectsLab',
         },
-      ],
+      ] as const,
     };
   },
-};
+});
 </script>
 
 <style>
 .projects {
-  padding: 30px;
+  @apply p-7;
 }
 .recipe-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
+  @apply grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6;
 }
 .recipe-card {
-  background: #fff;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  @apply bg-white rounded-2xl p-5 shadow-lg shadow-black/10 transition-transform duration-300;
 }
 .recipe-card:hover {
-  transform: scale(1.05);
+  @apply scale-105;
 }
 .recipe-card img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 10px;
+  @apply w-full h-40 object-cover rounded-xl;
 }
 .recipe-card h3 {
-  color: #4a90e2;
-  font-family: 'Playfair Display', serif;
+  @apply text-[#4a90e2] font-playfair;
 }
 .recipe-card a {
-  display: inline-block;
-  margin-top: 10px;
-  color: #ffd700;
-  text-decoration: none;
-  font-weight: bold;
+  @apply inline-block mt-2.5 text-[#ffd700] no-underline font-bold;
 }
 </style>

@@ -1,6 +1,16 @@
-<script>
+<template>
+  <div class="about">
+    <h2>自己紹介</h2>
+    <p>私はKA。アトリエシリーズにインスパイアされたクリエイターです。Unity、Blender、Unreal Engineで魔法のような作品を作り、ポートフォリオに情熱を込めています！</p>
+    <div class="sparkle"></div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
 import { gsap } from 'gsap';
-export default {
+
+export default defineComponent({
   name: 'About',
   mounted() {
     gsap.to('.sparkle', {
@@ -13,37 +23,20 @@ export default {
       ease: 'sine.inOut',
     });
   },
-};
+});
 </script>
-<template>
-  <div class="about">
-    <h2>自己紹介</h2>
-    <p>私はKA。アトリエシリーズにインスパイアされたクリエイターです。Unity、Blender、Unreal Engineで魔法のような作品を作り、ポートフォリオに情熱を込めています！</p>
-    <div class="sparkle"></div>
-  </div>
-</template>
+
 <style scoped>
 .about {
-  padding: 40px;
-  text-align: center;
-  font-family: 'Playfair Display', serif;
+  @apply p-10 text-center font-playfair;
 }
 .about h2 {
-  color: #4a90e2;
-  font-size: 2em;
+  @apply text-[#4a90e2] text-2xl;
 }
 .about p {
-  color: #6b4e71;
-  font-size: 1.1em;
-  line-height: 1.6;
+  @apply text-[#6b4e71] text-lg leading-6;
 }
 .sparkle {
-  width: 20px;
-  height: 20px;
-  background: url('/images/sparkle.png') no-repeat center;
-  background-size: contain;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  @apply w-5 h-5 bg-[url('/images/sparkle.png')] bg-center bg-no-repeat bg-contain absolute top-1/2 left-1/2;
 }
 </style>

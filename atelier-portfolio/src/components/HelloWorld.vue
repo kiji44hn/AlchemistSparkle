@@ -1,18 +1,18 @@
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue';
 
-defineProps({
-  msg: String,
-})
+defineProps<{
+  msg: string;
+}>();
 
-const count = ref(0)
+const count = ref<number>(0);
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="count++" class="count-btn">count is {{ count }}</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
@@ -21,7 +21,7 @@ const count = ref(0)
 
   <p>
     Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank" class="link"
       >create-vue</a
     >, the official Vue + Vite starter
   </p>
@@ -30,6 +30,7 @@ const count = ref(0)
     <a
       href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
       target="_blank"
+      class="link"
       >Vue Docs Scaling up Guide</a
     >.
   </p>
@@ -37,7 +38,18 @@ const count = ref(0)
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+@layer components {
+  .card {
+    @apply mt-4;
+  }
+  .count-btn {
+    @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600;
+  }
+  .link {
+    @apply text-blue-500 hover:underline;
+  }
+  .read-the-docs {
+    @apply mt-4 text-gray-500;
+  }
 }
 </style>

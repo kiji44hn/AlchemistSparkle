@@ -1,4 +1,3 @@
-<!-- src/App.vue -->
 <template>
   <div class="atelier-container">
     <header>
@@ -21,55 +20,36 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import AudioPlayer from './components/AudioPlayer.vue';
 
-export default {
+export default defineComponent({
   name: 'App',
   components: {
-    AudioPlayer
+    AudioPlayer: AudioPlayer
   }
-};
+});
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
-
+/* Tailwind CSSを使用 */
 .atelier-container {
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #f8e1e9, #d9e4f5);
-  font-family: 'M PLUS Rounded 1c', sans-serif;
-  text-align: center;
+  @apply min-h-screen bg-gradient-to-b from-[#f8e1e9] to-[#d9e4f5] font-sans text-center;
 }
 header {
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  border-bottom: 3px solid #ffd700;
+  @apply p-5 bg-white/90 border-b-4 border-[#ffd700];
 }
 h1 {
-  font-family: 'Playfair Display', serif;
-  color: #4a90e2;
-  font-size: 2.8em;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  @apply font-playfair text-[#4a90e2] text-4xl shadow-[1px_1px_2px_rgba(0,0,0,0.1)];
 }
 nav a {
-  margin: 0 20px;
-  color: #6b4e71;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.2em;
+  @apply mx-5 text-[#6b4e71] no-underline font-bold text-lg;
 }
 nav a:hover {
-  color: #ffd700;
-  transition: color 0.3s;
+  @apply text-[#ffd700] transition-colors duration-300;
 }
 footer {
-  padding: 15px;
-  background: #6b4e71;
-  color: #fff;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  font-family: 'Playfair Display', serif;
+  @apply p-4 bg-[#6b4e71] text-white fixed bottom-0 w-full font-playfair;
 }
 </style>
