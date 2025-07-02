@@ -15,12 +15,20 @@
     <footer>
       <p>© 2025 KA's Atelier</p>
     </footer>
+    <div class="audio">
+      <AudioPlayer />
+    </div>
   </div>
 </template>
 
 <script>
+import AudioPlayer from './components/AudioPlayer.vue';
+
 export default {
   name: 'App',
+  components: {
+    AudioPlayer
+  }
 };
 </script>
 
