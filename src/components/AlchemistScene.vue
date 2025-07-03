@@ -26,10 +26,10 @@ export default defineComponent({
       }
 
       const textureLoader = new THREE.TextureLoader();
-      const sparkleTexture = textureLoader.load('/images/sparkle.png'); // テクスチャを追加
+      const sparkleTexture = textureLoader.load('/images/sparkle.png'); // 既存のテクスチャ
 
       const particlesGeometry = new THREE.BufferGeometry();
-      const particlesCount = 200;
+      const particlesCount = 150; // 200から150に調整（好みに応じて変更可）
       const positions = new Float32Array(particlesCount * 3);
 
       for (let i = 0; i < particlesCount * 3; i += 3) {
@@ -40,11 +40,12 @@ export default defineComponent({
 
       particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.3, // テクスチャに適したサイズに調整
-        map: sparkleTexture, // テクスチャを適用
+        size: 0.3,
+        map: sparkleTexture,
+        color: 0xB9E4C9, // 青寄りのパステルカラーに変更
         transparent: true,
         opacity: 0.8,
-        alphaTest: 0.1, // 透明部分を正しく表示
+        alphaTest: 0.1,
       });
 
       particles = new THREE.Points(particlesGeometry, particlesMaterial);
