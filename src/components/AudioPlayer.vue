@@ -13,6 +13,7 @@
 import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 
 export default defineComponent({
+  name: 'AudioPlayer',
   setup() {
     const audioSrc = '/harunoyokan.mp3';
     const canvasWidth = 600;
@@ -44,7 +45,7 @@ export default defineComponent({
         source.connect(analyser.value);
         analyser.value.connect(audioContext.value.destination);
         analyser.value.fftSize = 256;
-        dataArray.value = new Uint8Array(analyser.value.frequencyBinCount) as Uint8Array;
+        dataArray.value = new Uint8Array(analyser.value.frequencyBinCount);
       } catch (error) {
         console.error('AudioContextエラー:', error);
         alert('音声処理に失敗しました。ブラウザの設定を確認してください。');
@@ -129,12 +130,31 @@ export default defineComponent({
 
 <style scoped>
 .audio-player {
-  @apply min-h-[30vh] flex flex-col items-center justify-center p-4; /* min-h-screenをmin-h-[70vh]に変更 */
+  min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 .controls {
-  @apply flex gap-2 mt-6;
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 button {
-  @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400;
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #2563eb;
+}
+button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
 }
 </style>
