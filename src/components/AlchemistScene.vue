@@ -14,67 +14,74 @@ export default defineComponent({
     let scene: THREE.Scene;
     let camera: THREE.PerspectiveCamera;
     let renderer: THREE.WebGLRenderer;
-    let particles: THREE.Points;
+    let stars: THREE.Points;
+    let clock: THREE.Clock;
 
     const init = () => {
+      // シーンとカメラの初期設定
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      renderer = new THREE.WebGLRenderer({ antialias: true });
-      renderer.setSize(window.innerWidth * 0.5, window.innerHeight * 0.5);
+      renderer = new THREE.WebGLRenderer({ alpha: true }); // 背景透過
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
       if (sceneContainer.value) {
         sceneContainer.value.appendChild(renderer.domElement);
       }
 
-      const textureLoader = new THREE.TextureLoader();
-      const sparkleTexture = textureLoader.load('/images/sparkle.png'); // 既存のテクスチャ
-
-      const particlesGeometry = new THREE.BufferGeometry();
-      const particlesCount = 150; // 200から150に調整（好みに応じて変更可）
-      const positions = new Float32Array(particlesCount * 3);
-
-      for (let i = 0; i < particlesCount * 3; i += 3) {
-        positions[i] = (Math.random() - 0.5) * 10;
-        positions[i + 1] = (Math.random() - 0.5) * 10;
-        positions[i + 2] = (Math.random() - 0.5) * 10;
+      // 星々の設定
+      const geometry = new THREE.BufferGeometry();
+      const vertices = [];
+      const particleCount = 1000; // 星の数を調整
+      for (let i = 0; i < particleCount; i++) {
+        vertices.push(
+          (Math.random() - 0.5) * 10, // X座標
+          (Math.random() - 0.5) * 10, // Y座標
+          (Math.random() - 0.5) * 10  // Z座標
+        );
       }
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
-      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.3,
-        map: sparkleTexture,
-        color: 0xB9E4C9, // 青寄りのパステルカラーに変更
-        transparent: true,
-        opacity: 0.8,
-        alphaTest: 0.1,
+      const material = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 0.5, // 星のサイズ
       });
 
-      particles = new THREE.Points(particlesGeometry, particlesMaterial);
-      scene.add(particles);
+      stars = new THREE.Points(geometry, material);
+      stars.position.set(0, 0, -10); // 星々を錬金窯に近づける
+      scene.add(stars);
 
-      camera.position.z = 5;
+      // カメラ位置
+      camera.position.z = 20;
+
+      // 時計を初期化
+      clock = new THREE.Clock();
     };
 
     const animate = () => {
       requestAnimationFrame(animate);
-      if (particles) {
-        particles.rotation.y += 0.001;
-      }
+
+      const elapsedTime = clock.getElapsedTime();
+
+      // 背景色の変更
+      const hue = (elapsedTime * 20) % 360;
+      renderer.setClearColor(new THREE.Color(`hsl(${hue}, 50%, 15%)`));
+
+      // 星々を回転
+      stars.rotation.x += 0.001;
+      stars.rotation.y += 0.001;
+
       renderer.render(scene, camera);
     };
 
     onMounted(() => {
       init();
       animate();
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth * 0.5, window.innerHeight * 0.5);
-      });
     });
 
     onUnmounted(() => {
-      window.removeEventListener('resize', () => {});
-      if (renderer) renderer.dispose();
+      if (renderer) {
+        renderer.dispose();
+      }
     });
 
     return { sceneContainer };
@@ -85,6 +92,7 @@ export default defineComponent({
 <style scoped>
 .scene-container {
   width: 100%;
-  height: 50vh;
+  height: 100vh;
+  overflow: hidden;
 }
 </style>

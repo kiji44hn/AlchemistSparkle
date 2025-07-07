@@ -10,6 +10,7 @@
     </header>
     <main>
       <router-view></router-view>
+      <AudioPlayer />
     </main>
     <footer>
       <p>© 2025 KA's Atelier</p>
@@ -20,9 +21,13 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import { gsap } from "gsap";
+import AudioPlayer from '@/components/AudioPlayer.vue';
 
 export default defineComponent({
   name: 'App',
+  components: {
+    AudioPlayer,
+  },
   setup() {
     onMounted(() => {
       // GSAPフェード効果を適用

@@ -1,9 +1,11 @@
 <template>
   <div class="audio-player">
-    <audio ref="audio" :src="audioSrc" controls @timeupdate="onTimeUpdate"></audio>
+    <audio ref="audio" :src="audioSrc" loop @timeupdate="onTimeUpdate"></audio>
     <div class="controls">
-      <button @click="playAudio" :aria-label="playButtonLabel">再生</button>
-      <button @click="pauseAudio" :aria-label="pauseButtonLabel">停止</button>
+      <p>{{ toggleButtonLabel }}</p>
+      <button class="toggle-button" @click="togglePlayPause" :aria-label="toggleButtonLabel">
+        <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
+      </button>
     </div>
     <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
   </div>
@@ -18,7 +20,9 @@ export default defineComponent({
     const audioSrc = '/harunoyokan.mp3';
     const canvasWidth = 600;
     const canvasHeight = 200;
-    const barColor = (hue: number) => `hsl(${hue}, 100%, 50%)`;
+    const tailwindColors = ["#4a90e2", "#ffd700", "#6b4e71"];
+    const barColor = (index: number) =>
+      tailwindColors[index % tailwindColors.length]; // 循環的に色を使用
 
     const audio = ref<HTMLAudioElement | null>(null);
     const canvas = ref<HTMLCanvasElement | null>(null);
@@ -28,42 +32,35 @@ export default defineComponent({
 
     let ctx: CanvasRenderingContext2D | null = null;
     let animationFrameId: number | null = null;
+    const isPlaying = ref(false);
 
-    const playButtonLabel = '音声を再生';
-    const pauseButtonLabel = '音声を停止';
+    const toggleButtonLabel = ref('再生 / 停止');
 
     const setupAudioContext = () => {
-      if (!audioContext.value || !audio.value) {
-        console.warn('AudioContextまたはaudio要素が利用できません');
-        return;
-      }
+      if (audioContext.value || !audio.value) return;
 
-      try {
-        audioContext.value = new AudioContext();
-        const source = audioContext.value.createMediaElementSource(audio.value);
-        analyser.value = audioContext.value.createAnalyser();
-        source.connect(analyser.value);
-        analyser.value.connect(audioContext.value.destination);
-        analyser.value.fftSize = 256;
-        dataArray.value = new Uint8Array(analyser.value.frequencyBinCount);
-      } catch (error) {
-        console.error('AudioContextエラー:', error);
-        alert('音声処理に失敗しました。ブラウザの設定を確認してください。');
-      }
+      audioContext.value = new AudioContext();
+      const source = audioContext.value.createMediaElementSource(audio.value);
+      analyser.value = audioContext.value.createAnalyser();
+      source.connect(analyser.value);
+      analyser.value.connect(audioContext.value.destination);
+
+      // データ配列を初期化
+      analyser.value.fftSize = 256;
+      dataArray.value = new Uint8Array(analyser.value.frequencyBinCount);
     };
 
-    const playAudio = () => {
+    const togglePlayPause = () => {
       if (!audioContext.value) setupAudioContext();
       if (audio.value) {
-        audio.value.play().catch(error => {
-          console.error('再生エラー:', error);
-          alert('再生に失敗しました。音声ファイルを確認してください。');
-        });
+        if (isPlaying.value) {
+          audio.value.pause();
+          isPlaying.value = false;
+        } else {
+          audio.value.play();
+          isPlaying.value = true;
+        }
       }
-    };
-
-    const pauseAudio = () => {
-      if (audio.value) audio.value.pause();
     };
 
     const onTimeUpdate = () => {
@@ -83,9 +80,10 @@ export default defineComponent({
 
       const barWidth = (canvas.value.width / dataArray.value.length) * 2.5;
       let x = 0;
+
       for (let i = 0; i < dataArray.value.length; i++) {
         const barHeight = dataArray.value[i] / 2;
-        ctx.fillStyle = barColor(i * 2);
+        ctx.fillStyle = barColor(i);
         ctx.fillRect(x, canvas.value.height - barHeight, barWidth, barHeight);
         x += barWidth + 1;
       }
@@ -118,11 +116,10 @@ export default defineComponent({
       canvas,
       canvasWidth,
       canvasHeight,
-      playAudio,
-      pauseAudio,
+      togglePlayPause,
       onTimeUpdate,
-      playButtonLabel,
-      pauseButtonLabel,
+      toggleButtonLabel,
+      isPlaying,
     };
   },
 });
@@ -130,31 +127,20 @@ export default defineComponent({
 
 <style scoped>
 .audio-player {
-  min-height: 30vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  @apply flex flex-col items-center justify-center p-5 min-h-[30vh];
 }
+
 .controls {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  @apply flex gap-4 mt-4;
+  display: block;
 }
-button {
-  padding: 8px 16px;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+
+.toggle-button {
+  @apply bg-[#4a90e2] text-white rounded-full p-3 hover:bg-[#ffd700] shadow-md;
 }
-button:hover {
-  background-color: #2563eb;
-}
-button:disabled {
-  background-color: #9ca3af;
-  cursor: not-allowed;
+
+canvas {
+  @apply mt-6 rounded-lg shadow-lg;
+  display: none;
 }
 </style>
