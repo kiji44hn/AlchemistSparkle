@@ -18,7 +18,6 @@ export default defineComponent({
     let clock: THREE.Clock;
 
     const init = () => {
-      // シーンとカメラの初期設定
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       renderer = new THREE.WebGLRenderer({ alpha: true }); // 背景透過
@@ -28,32 +27,28 @@ export default defineComponent({
         sceneContainer.value.appendChild(renderer.domElement);
       }
 
-      // 星々の設定
       const geometry = new THREE.BufferGeometry();
       const vertices = [];
-      const particleCount = 1000; // 星の数を調整
+      const particleCount = 1000;
       for (let i = 0; i < particleCount; i++) {
         vertices.push(
-          (Math.random() - 0.5) * 10, // X座標
-          (Math.random() - 0.5) * 10, // Y座標
-          (Math.random() - 0.5) * 10  // Z座標
+          (Math.random() - 0.5) * 20, // X座標を広げる
+          (Math.random() - 0.5) * 20, // Y座標を広げる
+          (Math.random() - 0.5) * 20  // Z座標を広げる
         );
       }
       geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
       const material = new THREE.PointsMaterial({
         color: 0xffffff,
-        size: 0.5, // 星のサイズ
+        size: 0.6, // 星のサイズを微調整
       });
 
       stars = new THREE.Points(geometry, material);
-      stars.position.set(0, 0, -10); // 星々を錬金窯に近づける
+      stars.position.set(0, 0, -15); // 星々をカメラ近くに配置
       scene.add(stars);
 
-      // カメラ位置
-      camera.position.z = 20;
-
-      // 時計を初期化
+      camera.position.z = 30;
       clock = new THREE.Clock();
     };
 
@@ -63,10 +58,9 @@ export default defineComponent({
       const elapsedTime = clock.getElapsedTime();
 
       // 背景色の変更
-      const hue = (elapsedTime * 20) % 360;
-      renderer.setClearColor(new THREE.Color(`hsl(${hue}, 50%, 15%)`));
+      renderer.setClearColor(new THREE.Color(`hsl(${elapsedTime * 10 % 360}, 50%, 15%)`));
 
-      // 星々を回転
+      // 星々の回転
       stars.rotation.x += 0.001;
       stars.rotation.y += 0.001;
 
@@ -91,8 +85,10 @@ export default defineComponent({
 
 <style scoped>
 .scene-container {
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  @apply absolute top-[-64px] w-full h-screen overflow-hidden z-[-1];
+}
+
+canvas {
+  @apply block w-full h-full relative top-[-7px] z-[-1];
 }
 </style>

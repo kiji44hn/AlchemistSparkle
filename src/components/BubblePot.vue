@@ -28,22 +28,10 @@ export default {
 
 <style scoped>
 .pot {
-  width: 200px;
-  height: 200px;
-  background-color: green;
-  border-radius: 50%;
-  position: relative;
-  z-index: 1; /* 泡を錬金窯の下に配置 */
+  @apply w-[200px] h-[200px] bg-green-500 rounded-full relative z-[1];
 }
 
 .bubble {
-  width: 20px;
-  height: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  position: absolute;
-  bottom: 20%;
-  left: 50%;
-  transform: translate(-50%, 0);
+  @apply w-[20px] h-[20px] bg-white/80 rounded-full absolute bottom-[20%] left-[50%] transform translate-x-[-50%];
 }
 </style>
