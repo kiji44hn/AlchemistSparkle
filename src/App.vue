@@ -60,6 +60,6 @@ nav a:hover {
   @apply text-[#ffd700] transition-colors duration-300;
 }
 footer {
-  @apply p-4 bg-[#6b4e71] text-white fixed bottom-0 w-full font-playfair;
+  @apply p-4 bg-[#6b4e71] text-white fixed bottom-0 w-[96.7vw] font-playfair;
 }
 </style>

@@ -127,7 +127,8 @@ export default defineComponent({
 
 <style scoped>
 .audio-player {
-  @apply flex flex-col items-center justify-center p-5 min-h-[30vh];
+  @apply flex flex-col items-center justify-center p-5 min-h-[23vh];
+  display: block;
 }
 
 .controls {
