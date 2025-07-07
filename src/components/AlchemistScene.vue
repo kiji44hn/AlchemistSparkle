@@ -104,6 +104,6 @@ export default defineComponent({
 
 <style scoped>
 .scene-container {
-  @apply absolute top-[-64px] w-full h-screen overflow-hidden z-[-1];
+  @apply absolute top-[-32px] w-full h-[75vh] overflow-hidden z-[-1];
 }
 </style>

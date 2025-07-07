@@ -143,4 +143,8 @@ export default defineComponent({
 .audio-button {
   @apply bg-[#4a90e2] text-white rounded-full p-4 hover:bg-[#ffd700] shadow-lg text-2xl;
 }
+
+canvas {
+    display: none;
+}
 </style>
