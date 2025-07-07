@@ -26,10 +26,14 @@
       </div>
     </div>
   </div>
+  <div class="scene-area">
+    <AlchemistScene />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import AlchemistScene from '@/components/AlchemistScene.vue';
 
 interface Project {
   id: number;
@@ -40,6 +44,10 @@ interface Project {
 }
 
 export default defineComponent({
+  name: 'Home',
+  components: {
+    AlchemistScene,
+  },
   data() {
     return {
       projects: [
@@ -136,5 +144,10 @@ export default defineComponent({
 }
 .modal-content button {
   @apply mt-4 bg-[#6b4e71] text-white rounded-full px-4 py-2 font-bold hover:bg-[#ffd700] transition-colors duration-300;
+}
+
+.scene-area {
+  position: relative;
+  bottom: 20rem;
 }
 </style>

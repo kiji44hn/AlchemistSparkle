@@ -9,14 +9,21 @@
     </div>
     <footer class="footer">錬金工房の世界をお楽しみください。</footer>
   </div>
+  <div class="scene-area">
+    <AlchemistScene />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
+import AlchemistScene from '@/components/AlchemistScene.vue';
 import { gsap } from 'gsap';
 
 export default defineComponent({
   name: 'About',
+  components: {
+    AlchemistScene,
+  },
   setup() {
     onMounted(() => {
       const tl = gsap.timeline({ defaults: { duration: 1, ease: 'power2.out' } });
@@ -64,5 +71,10 @@ export default defineComponent({
     transform: translate(0, 0) scale(1);
     opacity: 1;
   }
+}
+
+.scene-area {
+  position: relative;
+  bottom: 11.5rem;
 }
 </style>
