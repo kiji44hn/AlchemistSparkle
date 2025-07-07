@@ -11,7 +11,8 @@
     "types": ["vite/client", "vue", "vue-router"],
     "baseUrl": ".", // プロジェクトルートを基準
     "paths": {
-      "@/*": ["src/*"]
+        "@components/*": ["src/components/*"],
+        "@assets/*": ["src/assets/*"]
     }
   },
   "include": ["src/**/*", "src/**/*.vue"],

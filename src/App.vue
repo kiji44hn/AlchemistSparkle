@@ -1,6 +1,6 @@
 <template>
   <div class="atelier-container">
-    <header>
+    <header class="header">
       <h1>KAの錬金工房</h1>
       <nav>
         <router-link to="/">ホーム</router-link>
@@ -18,10 +18,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
+import { gsap } from "gsap";
 
 export default defineComponent({
   name: 'App',
+  setup() {
+    onMounted(() => {
+      // GSAPフェード効果を適用
+      gsap.from(".header", {
+        duration: 1, 
+        opacity: 0, 
+        y: -50, 
+        ease: "power2.out"
+      });
+    });
+  }
 });
 </script>
 
