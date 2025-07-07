@@ -1,29 +1,34 @@
 <template>
-  <div class="audio-player">
-    <audio ref="audio" :src="audioSrc" loop @timeupdate="onTimeUpdate"></audio>
-    <div class="controls">
-      <p>{{ toggleButtonLabel }}</p>
-      <button class="toggle-button" @click="togglePlayPause" :aria-label="toggleButtonLabel">
-        <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
-      </button>
+  <div>
+    <!-- Audio Player Modal -->
+    <div v-show="showModal" class="modal">
+      <div class="modal-content">
+        <audio ref="audio" :src="audioSrc" loop @timeupdate="onTimeUpdate"></audio>
+        <div class="controls">
+          <p>{{ toggleButtonLabel }}</p>
+          <button
+            class="toggle-button"
+            @click="togglePlayPauseAndClose"
+            :aria-label="toggleButtonLabel"
+          >
+            <i :class="isPlaying ? 'fas fa-pause' : 'fas fa-play'"></i>
+          </button>
+        </div>
+        <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
+      </div>
     </div>
-    <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
+import { defineComponent, ref, onMounted, onUnmounted } from "vue";
 
 export default defineComponent({
-  name: 'AudioPlayer',
+  name: "AudioPlayer",
   setup() {
-    const audioSrc = '/harunoyokan.mp3';
+    const audioSrc = "/harunoyokan.mp3";
     const canvasWidth = 600;
     const canvasHeight = 200;
-    const tailwindColors = ["#4a90e2", "#ffd700", "#6b4e71"];
-    const barColor = (index: number) =>
-      tailwindColors[index % tailwindColors.length]; // 循環的に色を使用
-
     const audio = ref<HTMLAudioElement | null>(null);
     const canvas = ref<HTMLCanvasElement | null>(null);
     const audioContext = ref<AudioContext | null>(null);
@@ -33,49 +38,50 @@ export default defineComponent({
     let ctx: CanvasRenderingContext2D | null = null;
     let animationFrameId: number | null = null;
     const isPlaying = ref(false);
-
-    const toggleButtonLabel = ref('再生 / 停止');
+    const toggleButtonLabel = ref("再生 / 停止");
+    const showModal = ref(true);
 
     const setupAudioContext = () => {
       if (audioContext.value || !audio.value) return;
-
       audioContext.value = new AudioContext();
       const source = audioContext.value.createMediaElementSource(audio.value);
       analyser.value = audioContext.value.createAnalyser();
       source.connect(analyser.value);
       analyser.value.connect(audioContext.value.destination);
-
-      // データ配列を初期化
       analyser.value.fftSize = 256;
       dataArray.value = new Uint8Array(analyser.value.frequencyBinCount);
     };
 
-    const togglePlayPause = () => {
+    const togglePlayPauseAndClose = async () => {
       if (!audioContext.value) setupAudioContext();
       if (audio.value) {
-        if (isPlaying.value) {
-          audio.value.pause();
-          isPlaying.value = false;
-        } else {
-          audio.value.play();
-          isPlaying.value = true;
+        try {
+          await audioContext.value?.resume();
+          if (isPlaying.value) {
+            audio.value.pause();
+            isPlaying.value = false;
+          } else {
+            await audio.value.play();
+            isPlaying.value = true;
+            showModal.value = false; // モーダルを閉じる
+          }
+        } catch (error) {
+          console.error("音楽再生中にエラーが発生しました:", error);
         }
       }
     };
 
     const onTimeUpdate = () => {
       if (audio.value && audio.value.currentTime > 0) {
-        updateVisualizer();
+        console.log("現在の再生時間:", audio.value.currentTime);
       }
     };
 
     const updateVisualizer = () => {
       if (!analyser.value || !dataArray.value || !canvas.value || !ctx) return;
-
       analyser.value.getByteFrequencyData(dataArray.value);
-
       ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
-      ctx.fillStyle = '#000';
+      ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, canvas.value.width, canvas.value.height);
 
       const barWidth = (canvas.value.width / dataArray.value.length) * 2.5;
@@ -83,21 +89,16 @@ export default defineComponent({
 
       for (let i = 0; i < dataArray.value.length; i++) {
         const barHeight = dataArray.value[i] / 2;
-        ctx.fillStyle = barColor(i);
+        ctx.fillStyle = "#FFD700"; // Tailwind gold
         ctx.fillRect(x, canvas.value.height - barHeight, barWidth, barHeight);
         x += barWidth + 1;
       }
-
       animationFrameId = requestAnimationFrame(updateVisualizer);
     };
 
     onMounted(() => {
       if (canvas.value) {
-        ctx = canvas.value.getContext('2d');
-        if (!ctx) {
-          console.error('Canvasの2Dコンテキストを取得できません');
-          return;
-        }
+        ctx = canvas.value.getContext("2d");
       }
     });
 
@@ -116,32 +117,30 @@ export default defineComponent({
       canvas,
       canvasWidth,
       canvasHeight,
-      togglePlayPause,
+      togglePlayPauseAndClose,
       onTimeUpdate,
       toggleButtonLabel,
       isPlaying,
+      showModal,
     };
   },
 });
 </script>
 
 <style scoped>
-.audio-player {
-  @apply flex flex-col items-center justify-center p-5 min-h-[23vh];
-  display: block;
+.modal {
+  @apply fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50 z-[10];
 }
 
-.controls {
-  @apply flex gap-4 mt-4;
-  display: block;
+.modal-content {
+  @apply bg-white p-5 rounded-lg shadow-lg w-[80%] max-w-[500px] relative text-center;
 }
 
-.toggle-button {
-  @apply bg-[#4a90e2] text-white rounded-full p-3 hover:bg-[#ffd700] shadow-md;
+.audio-button-container {
+  @apply flex justify-center mt-8;
 }
 
-canvas {
-  @apply mt-6 rounded-lg shadow-lg;
-  display: none;
+.audio-button {
+  @apply bg-[#4a90e2] text-white rounded-full p-4 hover:bg-[#ffd700] shadow-lg text-2xl;
 }
 </style>
