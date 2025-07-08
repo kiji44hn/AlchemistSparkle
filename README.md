@@ -63,14 +63,14 @@ KAの錬金工房は、「アトリエシリーズ」に触発されたウェブ
 ### リポジトリのクローン
 まず、リポジトリをクローンしてください：
 ```bash
-git clone https://github.com/kiji44hn/alchemist-sparkle.git
+git clone https://github.com/kiji44hn/AlchemistSparkle.git
 ```
 
 ## 必要な依存関係をインストール
 プロジェクトディレクトリに移動し、依存関係をインストールします：
 
 ```bash
-cd alchemist-sparkle
+cd AlchemistSparkle
 npm install
 ```
 
@@ -91,7 +91,7 @@ npm run build
 ## 📁 ディレクトリ構造
 
 ```
-alchemist-sparkle/
+AlchemistSparkle/
 ├── public/               # 静的ファイル
 ├── src/                  # ソースコード
 │   ├── assets/           # 画像やアイコン
