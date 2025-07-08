@@ -18,10 +18,7 @@ KAの錬金工房は、「アトリエシリーズ」に触発されたウェブ
 ## 🌟 プレビュー
 以下はプロジェクトの画面サンプルです：
 
-![ホームページ](./path/to/homepage-screenshot.png)
-![プロジェクト一覧](./path/to/projects-screenshot.png)
-![自己紹介ページ](./path/to/about-screenshot.png)
-
+![ホームページ](./path/to/homepage-screenshot.png) ![プロジェクト一覧](./path/to/projects-screenshot.png) ![自己紹介ページ](./path/to/about-screenshot.png)
 
 - **使用技術**: Vue.js、Three.js、GSAP、Tailwind CSS  
 - **デザインテーマ**: 錬金釜、星々のスパークル、錬金プロジェクトのリストと世界観の共有  
@@ -110,7 +107,7 @@ alchemist-sparkle/
 ```
 - 名前: KA
 - テーマ: 錬金術とクリエイティブなデザインの融合
-- 連絡先: [kiji44hn](連絡先: GitHub)
+- **連絡先**: [kiji44hn](https://github.com/kiji44hn)
 ```
 
 ## 🤝 コントリビューション
