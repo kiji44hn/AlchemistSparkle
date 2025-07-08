@@ -15,6 +15,14 @@ KAの錬金工房は、「アトリエシリーズ」に触発されたウェブ
 ![GSAP](https://img.shields.io/badge/GSAP-88CE02?logo=greensock&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?logo=tailwindcss&logoColor=white)
 
+## 🌟 プレビュー
+以下はプロジェクトの画面サンプルです：
+
+![ホームページ](./path/to/homepage-screenshot.png)
+![プロジェクト一覧](./path/to/projects-screenshot.png)
+![自己紹介ページ](./path/to/about-screenshot.png)
+
+
 - **使用技術**: Vue.js、Three.js、GSAP、Tailwind CSS  
 - **デザインテーマ**: 錬金釜、星々のスパークル、錬金プロジェクトのリストと世界観の共有  
 
