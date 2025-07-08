@@ -28,13 +28,13 @@
     </div>
   </div>
   <div class="scene-area">
-    <AlchemistScene />
+    <AlchemisetSceneProject />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import AlchemistScene from "@/components/AlchemistScene.vue";
+import AlchemisetSceneProject from "@/components/AlchemisetSceneProject.vue";
 
 interface Project {
   id: number;
@@ -47,7 +47,7 @@ interface Project {
 export default defineComponent({
   name: "Project",
   components: {
-    AlchemistScene,
+    AlchemisetSceneProject,
   },
   data() {
     return {
