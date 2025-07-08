@@ -78,8 +78,8 @@ export default defineComponent({
       );
       const puniMaterial = new THREE.SpriteMaterial({ map: puniTexture });
       const puni = new THREE.Sprite(puniMaterial);
-      puni.position.set(15, -3, 5); // 右側、カメラ前方に配置
-      puni.scale.set(4.5, 4.5, 4.5); // 大きさを調整
+      puni.position.set(-12, 4, 2); // 左側、カメラ前方に配置
+      puni.scale.set(4, 4, 4); // 大きさを調整
       scene.add(puni);
 
       // 樽の画像を追加
@@ -91,8 +91,8 @@ export default defineComponent({
       );
       const barrelMaterial = new THREE.SpriteMaterial({ map: barrelTexture });
       const barrel = new THREE.Sprite(barrelMaterial);
-      barrel.position.set(-15, -3, 5); // 左側、カメラ前方に配置
-      barrel.scale.set(6, 6, 6); // 大きさを調整
+      barrel.position.set(12, -2, 2); // 右側に配置
+      barrel.scale.set(4.5, 4.5, 4.5); // サイズを調整
       scene.add(barrel);
 
       camera.position.z = 25; // カメラ位置を調整して全体が見えるようにする
