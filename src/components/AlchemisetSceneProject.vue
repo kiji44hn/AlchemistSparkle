@@ -78,7 +78,7 @@ export default defineComponent({
       );
       const puniMaterial = new THREE.SpriteMaterial({ map: puniTexture });
       const puni = new THREE.Sprite(puniMaterial);
-      puni.position.set(-12, 4, 2); // 左側、カメラ前方に配置
+      puni.position.set(-32, 11.2, 2); // 左側、カメラ前方に配置
       puni.scale.set(4, 4, 4); // 大きさを調整
       scene.add(puni);
 

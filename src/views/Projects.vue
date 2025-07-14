@@ -66,13 +66,6 @@ export default defineComponent({
           image: "/images/fireworks.png",
           github: "https://github.com/kiji44hn/Fireworks",
         },
-        {
-          id: 3,
-          title: "CreativeEffectsLab",
-          description: "Unreal Engineで挑む未知の技術。実験炉から生まれる新たなる効果！",
-          image: "/images/creativeeffectslab.png",
-          github: "https://github.com/kiji44hn/CreativeEffectsLab",
-        },
       ] as Project[],
       showModal: false,
       selectedProject: {} as Project,
