@@ -78,7 +78,7 @@ export default defineComponent({
       );
       const puniMaterial = new THREE.SpriteMaterial({ map: puniTexture });
       const puni = new THREE.Sprite(puniMaterial);
-      puni.position.set(-32, 11.2, 2); // 左側、カメラ前方に配置
+      puni.position.set(-32, 16.2, 2); // 左側、カメラ前方に配置
       puni.scale.set(4, 4, 4); // 大きさを調整
       scene.add(puni);
 
@@ -91,7 +91,7 @@ export default defineComponent({
       );
       const barrelMaterial = new THREE.SpriteMaterial({ map: barrelTexture });
       const barrel = new THREE.Sprite(barrelMaterial);
-      barrel.position.set(12, -2, 2); // 右側に配置
+      barrel.position.set(12, -1, 2); // 右側に配置
       barrel.scale.set(4.5, 4.5, 4.5); // サイズを調整
       scene.add(barrel);
 
