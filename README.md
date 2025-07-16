@@ -27,7 +27,7 @@ KAの錬金工房は、「アトリエシリーズ」に触発されたウェブ
   ![ホームページ](./path/to/homepage-screenshot.png)
 
 - **プロジェクト一覧**  
-  ![プロジェクト一覧](./path/to/projects-screenshot.png)
+  ![プロジェクト一覧](./path/to/projects-screenshots.png)
 
 - **自己紹介ページ**  
   ![自己紹介ページ](./path/to/about-screenshot.png)
