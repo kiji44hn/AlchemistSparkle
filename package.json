@@ -7,7 +7,7 @@
     "dev": "vue-tsc --noEmit && vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "deploy:docs": "npm run build && if not exist docs mkdir docs && xcopy dist docs /E /I /H /Y && gh-pages -d docs"
   },
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",

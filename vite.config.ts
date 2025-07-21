@@ -9,7 +9,7 @@ export default defineConfig({
     },
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.vue'],
   },
-  base: '/AlchemistSparkle/', // 公開URLに合わせてベースパスを指定
+  base: '/AlchemistSparkle/',
   build: {
     rollupOptions: {
       output: {
