@@ -17,7 +17,7 @@
 ----
 
 ## ストーリーボード
-詳細な演出設計については、[Alchemist Sparkleのストーリーボード](./AlchemistSparkle-storyboard.md) をご覧ください。
+プロジェクト全体の演出設計については、[Alchemist Sparkleのストーリーボード](./AlchemistSparkle-storyboard.md) をご覧ください。
 
 ---
 
