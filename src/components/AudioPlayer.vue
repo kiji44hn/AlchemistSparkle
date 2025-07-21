@@ -26,7 +26,7 @@ import { defineComponent, ref, onMounted, onUnmounted } from "vue";
 export default defineComponent({
   name: "AudioPlayer",
   setup() {
-    const audioSrc = "/harunoyokan.mp3";
+    const audioSrc = "./public/harunoyokan.mp3";
     const canvasWidth = 600;
     const canvasHeight = 200;
     const audio = ref<HTMLAudioElement | null>(null);
