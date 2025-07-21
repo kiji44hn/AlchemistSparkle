@@ -22,11 +22,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, onUnmounted } from "vue";
+import harunoyokanMp3 from "/harunoyokan.mp3"; 
 
 export default defineComponent({
   name: "AudioPlayer",
   setup() {
-    const audioSrc = "./public/harunoyokan.mp3";
+    const audioSrc = harunoyokanMp3;
     const canvasWidth = 600;
     const canvasHeight = 200;
     const audio = ref<HTMLAudioElement | null>(null);
