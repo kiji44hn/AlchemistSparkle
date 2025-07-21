@@ -9,7 +9,6 @@ export default defineConfig({
     },
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.vue'],
   },
-  base: '/AlchemistSparkle/',
   build: {
     rollupOptions: {
       output: {
