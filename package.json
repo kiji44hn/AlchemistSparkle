@@ -7,12 +7,11 @@
     "dev": "vue-tsc --noEmit && vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "deploy:docs": "npm run build && if not exist docs mkdir docs && xcopy dist docs /E /I /H /Y && gh-pages -d docs"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/three": "^0.178.0",
-    "gh-pages": "^6.3.0",
     "gsap": "^3.13.0",
     "three": "^0.178.0",
     "vue-router": "^4.5.1"
@@ -22,6 +21,7 @@
     "@vue/runtime-core": "^3.5.17",
     "@vue/tsconfig": "^0.7.0",
     "autoprefixer": "^10.4.21",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.8.3",
